@@ -28,7 +28,6 @@
     var query = getQueryParams(document.location.search);
 
     var MEDIAPLAYER_VIDEO_ID = query.v || '5fSH8shWo_U',
-        MEDIAPLAYER_IS_TIMED = (query.timed === '0') ? false : true,
         MEDIAPLAYER_START_SEC = query.start ? parseInt(query.start, 10) : undefined;
 
     var tag = document.createElement('script');
@@ -59,52 +58,7 @@
 
     function onPlayerReady() {
         MediaPlayer.ytReady = true;
-        MediaPlayer.seek(MEDIAPLAYER_START_SEC);
-        MediaPlayer.play();
+        console.log("Player Ready");
+        MediaPlayer.player.playVideo();
     }
-
-    window.MediaPlayer = window.MediaPlayer || {
-        isPlayerReady: function () {
-            return (typeof this.player === 'object') &&
-                (typeof this.player.getPlayerState === 'function');
-        },
-
-        setVolume: function ( volume ) {
-            if (!this.isPlayerReady()) return;
-            this.player.setVolume(volume);
-        },
-
-        play: function () {
-            if (!this.isPlayerReady()) return;
-            this.player.playVideo();
-        },
-
-        pause: function () {
-            if (!this.isPlayerReady()) return;
-            this.player.pauseVideo();
-        },
-
-        seek: function ( seekTime ) {
-            if (!this.isPlayerReady()) return;
-            if (!MEDIAPLAYER_IS_TIMED) return;
-
-            var state, curTime, duration, diffTime;
-
-            state = this.player.getPlayerState();
-
-            if (state == YT.PlayerState.PAUSED) {
-                this.player.playVideo();
-            }
-
-            if (state === YT.PlayerState.BUFFERING) return;
-
-            duration = this.player.getDuration();
-            if (seekTime > duration) return;
-
-            curTime = this.player.getCurrentTime();
-            diffTime = Math.abs(curTime - seekTime);
-            if (diffTime < 5) return;
-
-            this.player.seekTo(seekTime, true);
-        }
-    };</script>
+;</script>
