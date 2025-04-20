@@ -35,9 +35,9 @@
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+    var player;
     function onYouTubeIframeAPIReady() {
-        var player = new YT.Player('player', {
+        player = new YT.Player('player', {
             videoId: MEDIAPLAYER_VIDEO_ID,
             startSeconds: MEDIAPLAYER_START_SEC,
             playerVars: {
@@ -53,12 +53,10 @@
                 'onReady': onPlayerReady
             }
         });
-        MediaPlayer.player = player;
     }
 
     function onPlayerReady() {
-        MediaPlayer.ytReady = true;
         console.log("Player Ready");
-        MediaPlayer.player.playVideo();
+        player.playVideo();
     }
 ;</script>
