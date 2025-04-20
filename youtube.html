@@ -59,6 +59,8 @@
 
     function onPlayerReady() {
         MediaPlayer.ytReady = true;
+        MediaPlayer.seek(MEDIAPLAYER_START_SEC);
+        MediaPlayer.play();
     }
 
     window.MediaPlayer = window.MediaPlayer || {
